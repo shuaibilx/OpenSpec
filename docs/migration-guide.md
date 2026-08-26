@@ -8,7 +8,7 @@ OPSX replaces the old phase-locked workflow with a fluid, action-based approach.
 
 | Aspect | Legacy | OPSX |
 |--------|--------|------|
-| **Commands** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive` | Default: `/opsx:propose`, `/opsx:explore`, `/opsx:apply`, `/opsx:update`, `/opsx:sync`, `/opsx:archive` (expanded workflow commands optional) |
+| **Commands** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive` | Default: `/opsx:roadmap`, `/opsx:propose`, `/opsx:explore`, `/opsx:apply`, `/opsx:update`, `/opsx:sync`, `/opsx:archive` (expanded workflow commands optional) |
 | **Workflow** | Create all artifacts at once | Create incrementally or all at once—your choice |
 | **Going back** | Awkward phase gates | Natural—update any artifact anytime |
 | **Customization** | Fixed structure | Schema-driven, fully hackable |
@@ -85,7 +85,7 @@ Don't worry about getting it perfect. We're still learning what works best here,
 
 Both `openspec init` and `openspec update` detect legacy files and guide you through the same cleanup process. Use whichever fits your situation:
 
-- New installs default to profile `core` (`propose`, `explore`, `apply`, `update`, `sync`, `archive`).
+- New installs default to profile `core` (`roadmap`, `propose`, `explore`, `apply`, `update`, `sync`, `archive`).
 - Migrated installs preserve your previously installed workflows by writing a `custom` profile when needed.
 
 ### Using `openspec init`
@@ -402,6 +402,7 @@ OPSX uses the emerging **skills** standard:
 
 ```
 .claude/skills/
+├── openspec-roadmap/SKILL.md
 ├── openspec-explore/SKILL.md
 ├── openspec-new-change/SKILL.md
 ├── openspec-continue-change/SKILL.md
@@ -564,7 +565,8 @@ project/
 │   └── config.yaml               # NEW: Project configuration
 ├── .claude/
 │   └── skills/                   # NEW: OPSX skills
-│       ├── openspec-propose/     # default core profile
+│       ├── openspec-roadmap/     # default core profile
+│       ├── openspec-propose/
 │       ├── openspec-explore/
 │       ├── openspec-apply-change/
 │       ├── openspec-update-change/

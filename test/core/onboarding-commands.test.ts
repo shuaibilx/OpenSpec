@@ -9,7 +9,7 @@ describe('getOnboardingCommands', () => {
   it('omits commands the profile does not install', () => {
     const commands = getOnboardingCommands(CORE_WORKFLOWS).map((c) => c.command);
 
-    expect(commands).toEqual(['/opsx:propose', '/opsx:apply']);
+    expect(commands).toEqual(['/opsx:roadmap', '/opsx:propose', '/opsx:apply']);
     expect(commands).not.toContain('/opsx:new');
     expect(commands).not.toContain('/opsx:continue');
   });

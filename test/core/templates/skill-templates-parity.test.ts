@@ -13,6 +13,7 @@ import {
   getFfChangeSkillTemplate,
   getNewChangeSkillTemplate,
   getOnboardSkillTemplate,
+  getOpsxRoadmapCommandTemplate,
   getOpsxApplyCommandTemplate,
   getOpsxArchiveCommandTemplate,
   getOpsxBulkArchiveCommandTemplate,
@@ -25,6 +26,7 @@ import {
   getOpsxProposeCommandTemplate,
   getOpsxProposeSkillTemplate,
   getOpsxUpdateCommandTemplate,
+  getRoadmapSkillTemplate,
   getOpsxVerifyCommandTemplate,
   getSyncSpecsSkillTemplate,
   getUpdateChangeSkillTemplate,
@@ -38,6 +40,8 @@ import {
 import { STORE_SELECTION_GUIDANCE } from '../../../src/core/templates/workflows/store-selection.js';
 
 const EXPECTED_FUNCTION_HASHES: Record<string, string> = {
+  getRoadmapSkillTemplate: 'ba8b9d99472a72a2c2c43af3b822343b62dcac3bceeb97e0ef37674718e45899',
+  getOpsxRoadmapCommandTemplate: '81ede1df2791b77cdaefe5a84b784f95ac41d21c790861b3fc6697dffe93df4a',
   getExploreSkillTemplate: '3efc37cddf342318ac37be7bb4ff5915f454b4c5bb127294ebdc7534ee21aa23',
   getNewChangeSkillTemplate: 'eabd1e895c5881dcb17dcbaa3fb26098dd59e8eacb318e400820b4dc811ef781',
   getContinueChangeSkillTemplate: '012136f6411a99c8fa228e2f9444cb64b0a89e0f56fdeac2fe03b2f5bee0c5d7',
@@ -66,6 +70,7 @@ const EXPECTED_FUNCTION_HASHES: Record<string, string> = {
 };
 
 const EXPECTED_GENERATED_SKILL_CONTENT_HASHES: Record<string, string> = {
+  'openspec-roadmap': 'dbccbfa33828e42870e04ea1e695613ec54320e33c645d9ffe85b3026810e4e2',
   'openspec-explore': '4d9736372cc1faf8a5d8a66395a95bf77b9f3fcd2cda40411ad1db6927e8066a',
   'openspec-new-change': 'ec4529beef978e34634a6f7286fab55d68fad8fb374dceb45691d52caab33fbb',
   'openspec-continue-change': 'bb6194a16c54891cdb253678e8f70ce53b2af86735243980f366ce551d37e42e',
@@ -83,6 +88,7 @@ const EXPECTED_GENERATED_SKILL_CONTENT_HASHES: Record<string, string> = {
 // Intentionally excludes getFeedbackSkillTemplate: this list only models templates
 // deployed via generateSkillContent, while feedback is covered in function payload parity.
 const GENERATED_SKILL_FACTORIES: Array<[string, () => SkillTemplate]> = [
+  ['openspec-roadmap', getRoadmapSkillTemplate],
   ['openspec-explore', getExploreSkillTemplate],
   ['openspec-new-change', getNewChangeSkillTemplate],
   ['openspec-continue-change', getContinueChangeSkillTemplate],
@@ -120,6 +126,8 @@ function hash(value: string): string {
 describe('skill templates split parity', () => {
   it('preserves all template function payloads exactly', () => {
     const functionFactories: Record<string, () => unknown> = {
+      getRoadmapSkillTemplate,
+      getOpsxRoadmapCommandTemplate,
       getExploreSkillTemplate,
       getNewChangeSkillTemplate,
       getContinueChangeSkillTemplate,

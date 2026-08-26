@@ -45,6 +45,10 @@ interface WorkflowPromptMeta {
 }
 
 export const WORKFLOW_PROMPT_META: Record<string, WorkflowPromptMeta> = {
+  roadmap: {
+    name: 'Plan roadmap',
+    description: 'Split a broad initiative into focused changes',
+  },
   propose: {
     name: 'Propose change',
     description: 'Create proposal, design, and tasks from a request',

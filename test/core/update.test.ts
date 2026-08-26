@@ -930,8 +930,9 @@ metadata:
 
       await updateCommand.execute(testDir);
 
-      // Verify core profile skill files were created/updated (propose, explore, apply, update, sync, archive)
+      // Verify core profile skill files were created/updated (roadmap, propose, explore, apply, update, sync, archive)
       const coreSkillNames = [
+        'openspec-roadmap',
         'openspec-explore',
         'openspec-apply-change',
         'openspec-update-change',
@@ -1162,8 +1163,8 @@ metadata:
 
       await updateCommand.execute(testDir);
 
-      // Verify core profile commands were created (propose, explore, apply, update, sync, archive)
-      const coreCommandIds = ['explore', 'apply', 'update', 'sync', 'archive', 'propose'];
+      // Verify core profile commands were created (roadmap, propose, explore, apply, update, sync, archive)
+      const coreCommandIds = ['roadmap', 'explore', 'apply', 'update', 'sync', 'archive', 'propose'];
       const commandsDir = path.join(testDir, '.claude', 'commands', 'opsx');
       for (const cmdId of coreCommandIds) {
         const cmdFile = path.join(commandsDir, `${cmdId}.md`);
@@ -3173,7 +3174,7 @@ More user content after markers.
           call.map(arg => String(arg)).join(' ')
         );
         expect(calls.some(call =>
-          call.includes('Your custom profile is missing 1 core workflow: update')
+          call.includes('Your custom profile is missing 2 core workflows: roadmap, update')
         )).toBe(true);
         expect(calls.some(call =>
           call.includes('openspec config profile core')
@@ -3195,7 +3196,7 @@ More user content after markers.
         featureFlags: {},
         profile: 'custom',
         delivery: 'both',
-        workflows: ['propose', 'explore', 'apply', 'sync', 'archive'],
+        workflows: ['roadmap', 'propose', 'explore', 'apply', 'sync', 'archive'],
       });
 
       const initCommand = new InitCommand({ tools: 'claude', force: true });
@@ -3223,7 +3224,7 @@ More user content after markers.
         featureFlags: {},
         profile: 'custom',
         delivery: 'both',
-        workflows: ['propose', 'explore', 'apply', 'update', 'sync', 'archive', 'verify'],
+        workflows: ['roadmap', 'propose', 'explore', 'apply', 'update', 'sync', 'archive', 'verify'],
       });
 
       const initCommand = new InitCommand({ tools: 'claude', force: true });

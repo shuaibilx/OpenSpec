@@ -1,6 +1,7 @@
 export const OPENSPEC_DIR_NAME = 'openspec';
 
 export const OPENSPEC_SKILL_NAMES = [
+  'openspec-roadmap',
   'openspec-explore',
   'openspec-new-change',
   'openspec-continue-change',

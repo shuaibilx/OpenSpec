@@ -35,6 +35,8 @@ you can update planning artifacts whenever implementation reveals something new.
 
 ```mermaid
 flowchart TD
+    Initiative["Broad initiative"] --> Roadmap["/opsx:roadmap<br/>(optional)"]
+    Roadmap --> Explore
     Idea["Idea or problem"] --> Explore["/opsx:explore<br/>(optional)"]
     Idea --> Propose["/opsx:propose"]
     Explore --> Propose
@@ -102,6 +104,7 @@ sequenceDiagram
 ### Default Quick Path (`core` profile)
 
 New installs default to `core`, which provides:
+- `/opsx:roadmap`
 - `/opsx:explore`
 - `/opsx:propose`
 - `/opsx:apply`
@@ -112,9 +115,15 @@ New installs default to `core`, which provides:
 Typical flow:
 
 ```text
-/opsx:explore ──► /opsx:propose ──► /opsx:apply ──► /opsx:sync ──► /opsx:archive
-  (optional)
+/opsx:roadmap ──► /opsx:explore ──► /opsx:propose ──► /opsx:apply ──► /opsx:sync ──► /opsx:archive
+ (broad only)       (optional)
 ```
+
+#### Start with a roadmap for broad initiatives
+
+`/opsx:roadmap` is the layer above individual changes. It inspects the current code and OpenSpec state, then proposes vertical phases where each phase is one independently valuable change. It writes `openspec/roadmap.md` only after confirmation and never creates all future changes at once.
+
+After one phase is archived, invoke Roadmap again to reconcile progress, then start a fresh Explore pass for the next change. See the [Roadmap guide](roadmap.md).
 
 #### Start by exploring (the habit worth forming)
 
@@ -531,6 +540,7 @@ For full command details and options, see [Commands](commands.md).
 
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
+| `/opsx:roadmap` | Plan and reconcile work across changes | Broad initiatives with multiple independently deliverable outcomes |
 | `/opsx:propose` | Create change + planning artifacts | Fast default path (`core` profile) |
 | `/opsx:explore` | Think through ideas with the AI | Start here when unsure: unclear requirements, investigation, comparing options |
 | `/opsx:new` | Start a change scaffold | Expanded mode, explicit artifact control |

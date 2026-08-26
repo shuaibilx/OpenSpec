@@ -90,6 +90,7 @@ Finally /opsx-apply to implement`;
 
   describe('all known commands', () => {
     const commands = [
+      'roadmap',
       'new',
       'continue',
       'apply',
@@ -136,6 +137,7 @@ Finally /opsx-apply to implement`;
 describe('transformToSkillReferences', () => {
   describe('all known commands', () => {
     const mappings: Array<[string, string]> = [
+      ['roadmap', '/openspec-roadmap'],
       ['explore', '/openspec-explore'],
       ['new', '/openspec-new-change'],
       ['continue', '/openspec-continue-change'],

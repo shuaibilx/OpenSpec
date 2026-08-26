@@ -6,6 +6,7 @@
 
 export type { SkillTemplate, CommandTemplate } from './types.js';
 
+export { getRoadmapInstructions, getRoadmapSkillTemplate, getOpsxRoadmapCommandTemplate } from './workflows/roadmap.js';
 export { getExploreSkillTemplate, getOpsxExploreCommandTemplate } from './workflows/explore.js';
 export { getNewChangeSkillTemplate, getOpsxNewCommandTemplate } from './workflows/new-change.js';
 export { getContinueChangeSkillTemplate, getOpsxContinueCommandTemplate } from './workflows/continue-change.js';

@@ -66,7 +66,7 @@ Explore to think it through, propose to draft the plan, apply to build it, archi
 
 ### What are `core` and expanded profiles?
 
-A profile decides which slash commands get installed. **Core** (the default) gives you `propose`, `explore`, `apply`, `update`, `sync`, `archive`. The **expanded** set adds `new`, `continue`, `ff`, `verify`, `bulk-archive`, and `onboard` for finer control. Switch with `openspec config profile`, then apply with `openspec update`.
+A profile decides which slash commands get installed. **Core** (the default) gives you `roadmap`, `propose`, `explore`, `apply`, `update`, `sync`, `archive`. The **expanded** set adds `new`, `continue`, `ff`, `verify`, `bulk-archive`, and `onboard` for finer control. Switch with `openspec config profile`, then apply with `openspec update`.
 
 ### Do I need to run `/opsx:sync`?
 

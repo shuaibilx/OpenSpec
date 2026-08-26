@@ -32,6 +32,7 @@ export const DESCRIPTION_BUDGET = 17;
  * then implement.
  */
 const ONBOARDING_COMMANDS: readonly OnboardingCommand[] = [
+  { workflow: 'roadmap', command: '/opsx:roadmap', description: 'Plan a roadmap' },
   { workflow: 'propose', command: '/opsx:propose', description: 'Start a change' },
   { workflow: 'new', command: '/opsx:new', description: 'Scaffold a change' },
   { workflow: 'continue', command: '/opsx:continue', description: 'Next artifact' },

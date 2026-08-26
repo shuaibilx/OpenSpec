@@ -15,6 +15,7 @@ for your tool. The files OpenSpec generates already use the right form.
 
 | Command | Purpose |
 |---------|---------|
+| `/opsx:roadmap` | Split or reconcile a broad initiative across focused OpenSpec changes |
 | `/opsx:propose` | Create a change and generate planning artifacts in one step |
 | `/opsx:explore` | Think through ideas before committing to a change |
 | `/opsx:apply` | Implement tasks from the change |
@@ -38,6 +39,42 @@ The default global profile is `core`. To enable expanded workflow commands, run 
 ---
 
 ## Command Reference
+
+### `/opsx:roadmap`
+
+Plan or reconcile a broad initiative across multiple independently deliverable OpenSpec changes. Roadmap is in the default `core` profile and runs before Explore when the work is larger than one cohesive change.
+
+**Syntax:**
+```text
+/opsx:roadmap [initiative-or-status-request]
+```
+
+**What it does:**
+- Inspects the resolved OpenSpec root, relevant code, specs, active changes, and archives
+- Distinguishes one cohesive change from a multi-phase initiative
+- Splits multi-phase work vertically by independently valuable outcome
+- Presents phase boundaries, dependencies, and verification signals for confirmation
+- Creates or minimally updates `openspec/roadmap.md` only after confirmation
+- Reconciles roadmap progress against active and archived change evidence
+
+**What it does not do:**
+- Implement code
+- Create all future changes
+- Write an individual change's proposal, design, specs, or tasks
+- Automatically start Explore or Propose
+
+**Example:**
+```text
+You: /opsx:roadmap Add AI summaries, semantic retrieval, RAG Q&A,
+     Agent tools, and SSE streaming to the news product.
+
+AI:  Multi-Phase Initiative. I recommend five independently deliverable
+     changes. Confirm the decomposition before I write openspec/roadmap.md?
+```
+
+See the [Roadmap guide](roadmap.md) for progress rules and a complete example.
+
+---
 
 ### `/opsx:propose`
 

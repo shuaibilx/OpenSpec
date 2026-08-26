@@ -14,8 +14,9 @@ This guide explains how OpenSpec works after you've installed and initialized it
 The whole loop, with each step labeled by where it happens:
 
 ```text
-TERMINAL   $ npm install -g @fission-ai/openspec@latest
+TERMINAL   $ npm install -g github:shuaibilx/OpenSpec
 TERMINAL   $ cd your-project && openspec init
+AI CHAT      /opsx:roadmap                    (optional: split a broad initiative)
 AI CHAT      /opsx:explore                    (optional: think it through first)
 AI CHAT      /opsx:propose add-dark-mode      (AI drafts the plan; you review it)
 AI CHAT      /opsx:apply                      (AI builds it)
@@ -26,7 +27,7 @@ Two terminal steps to set up, then you live in chat. The rest of this guide unpa
 
 **Don't want to do the terminal part yourself?** Paste the [setup prompt](installation.md#install-with-your-ai-assistant) into your assistant and it handles both lines, then reports what it created.
 
-> **Not sure what to build yet? Start with `/opsx:explore`.** It's a no-stakes thinking partner that reads your codebase, weighs options, and sharpens a fuzzy idea into a concrete plan, all before any artifact or code exists. When the picture is clear, it hands off to `/opsx:propose`. This is the single best habit for working with an AI that will otherwise confidently build the wrong thing. See the [Explore guide](explore.md).
+> **Several features under one initiative? Start with `/opsx:roadmap`.** It splits the initiative into focused changes, then hands the next change to a fresh Explore pass. For one unclear change, start directly with `/opsx:explore`. See the [Roadmap guide](roadmap.md) and [Explore guide](explore.md).
 
 ## How It Works
 
@@ -35,11 +36,11 @@ OpenSpec helps you and your AI coding assistant agree on what to build before an
 **Default quick path (core profile):**
 
 ```text
-/opsx:explore ──► /opsx:propose ──► /opsx:apply ──► /opsx:sync ──► /opsx:archive
-   (optional)
+/opsx:roadmap ──► /opsx:explore ──► /opsx:propose ──► /opsx:apply ──► /opsx:sync ──► /opsx:archive
+ (broad only)       (optional)
 ```
 
-Start with `/opsx:explore` when you're figuring out what to do, or jump straight to `/opsx:propose` when you already know. Explore is in the default profile, so it's always there when you want it.
+Start with `/opsx:roadmap` only when the initiative needs multiple independently deliverable changes. For one change, use `/opsx:explore` while figuring out what to do, or jump straight to `/opsx:propose` when you already know. All three are in the default profile.
 
 **Expanded path (custom workflow selection):**
 
@@ -47,7 +48,7 @@ Start with `/opsx:explore` when you're figuring out what to do, or jump straight
 /opsx:new ──► /opsx:ff or /opsx:continue ──► /opsx:apply ──► /opsx:verify ──► /opsx:archive
 ```
 
-The default global profile is `core`, which includes `propose`, `explore`, `apply`, `update`, `sync`, and `archive`. You can enable the expanded workflow commands with `openspec config profile` and then `openspec update`.
+The default global profile is `core`, which includes `roadmap`, `propose`, `explore`, `apply`, `update`, `sync`, and `archive`. You can enable the expanded workflow commands with `openspec config profile` and then `openspec update`.
 
 ## What OpenSpec Creates
 
@@ -276,6 +277,7 @@ openspec view
 
 ## Next Steps
 
+- [Roadmap](roadmap.md) - Split a broad initiative into focused changes before exploring each one
 - [Explore First](explore.md) - Use `/opsx:explore` to think through an idea before you commit
 - [Reviewing a Change](reviewing-changes.md) - What to check in the plan the AI drafts, before any code
 - [Writing Good Specs](writing-specs.md) - What a strong requirement and scenario look like

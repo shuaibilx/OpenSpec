@@ -220,9 +220,9 @@ openspec init --profile core
 
 OpenSpec installs workflow artifacts based on selected workflows:
 
-- **Core profile (default):** `propose`, `explore`, `apply`, `update`, `sync`, `archive`
+- **Core profile (default):** `roadmap`, `propose`, `explore`, `apply`, `update`, `sync`, `archive`
 - **Custom selection:** any subset of all workflow IDs:
-  `propose`, `explore`, `new`, `continue`, `apply`, `update`, `ff`, `sync`, `archive`, `bulk-archive`, `verify`, `onboard`
+  `roadmap`, `propose`, `explore`, `new`, `continue`, `apply`, `update`, `ff`, `sync`, `archive`, `bulk-archive`, `verify`, `onboard`
 
 In other words, skill/command counts are profile-dependent and delivery-dependent, not fixed.
 
@@ -230,6 +230,7 @@ In other words, skill/command counts are profile-dependent and delivery-dependen
 
 When selected by profile/workflow config, OpenSpec generates these skills:
 
+- `openspec-roadmap`
 - `openspec-propose`
 - `openspec-explore`
 - `openspec-new-change`

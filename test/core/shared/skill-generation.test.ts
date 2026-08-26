@@ -8,9 +8,9 @@ import {
 
 describe('skill-generation', () => {
   describe('getSkillTemplates', () => {
-    it('should return all 12 skill templates', () => {
+    it('should return all 13 skill templates', () => {
       const templates = getSkillTemplates();
-      expect(templates).toHaveLength(12);
+      expect(templates).toHaveLength(13);
     });
 
     it('should have unique directory names', () => {
@@ -24,6 +24,7 @@ describe('skill-generation', () => {
       const templates = getSkillTemplates();
       const dirNames = templates.map(t => t.dirName);
 
+      expect(dirNames).toContain('openspec-roadmap');
       expect(dirNames).toContain('openspec-explore');
       expect(dirNames).toContain('openspec-new-change');
       expect(dirNames).toContain('openspec-continue-change');
@@ -89,9 +90,9 @@ describe('skill-generation', () => {
   });
 
   describe('getCommandTemplates', () => {
-    it('should return all 12 command templates', () => {
+    it('should return all 13 command templates', () => {
       const templates = getCommandTemplates();
-      expect(templates).toHaveLength(12);
+      expect(templates).toHaveLength(13);
     });
 
     it('should have unique IDs', () => {
@@ -105,6 +106,7 @@ describe('skill-generation', () => {
       const templates = getCommandTemplates();
       const ids = templates.map(t => t.id);
 
+      expect(ids).toContain('roadmap');
       expect(ids).toContain('explore');
       expect(ids).toContain('new');
       expect(ids).toContain('continue');
@@ -144,9 +146,9 @@ describe('skill-generation', () => {
   });
 
   describe('getCommandContents', () => {
-    it('should return all 12 command contents', () => {
+    it('should return all 13 command contents', () => {
       const contents = getCommandContents();
-      expect(contents).toHaveLength(12);
+      expect(contents).toHaveLength(13);
     });
 
     it('should have valid content structure', () => {

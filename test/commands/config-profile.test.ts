@@ -69,7 +69,7 @@ describe('deriveProfileFromWorkflowSelection', () => {
 
   it('returns core when selection has exactly core workflows in different order', async () => {
     const { deriveProfileFromWorkflowSelection } = await import('../../src/commands/config.js');
-    expect(deriveProfileFromWorkflowSelection(['archive', 'sync', 'update', 'apply', 'explore', 'propose'])).toBe('core');
+    expect(deriveProfileFromWorkflowSelection(['archive', 'sync', 'update', 'apply', 'explore', 'propose', 'roadmap'])).toBe('core');
   });
 });
 
@@ -92,6 +92,7 @@ describe('config profile interactive flow', () => {
   function setupSyncedCoreBothArtifacts(projectDir: string): void {
     fs.mkdirSync(path.join(projectDir, 'openspec'), { recursive: true });
     const coreSkillDirs = [
+      'openspec-roadmap',
       'openspec-propose',
       'openspec-explore',
       'openspec-apply-change',
@@ -105,7 +106,7 @@ describe('config profile interactive flow', () => {
       fs.writeFileSync(skillPath, `name: ${dirName}\n`, 'utf-8');
     }
 
-    const coreCommands = ['propose', 'explore', 'apply', 'update', 'sync', 'archive'];
+    const coreCommands = ['roadmap', 'propose', 'explore', 'apply', 'update', 'sync', 'archive'];
     for (const commandId of coreCommands) {
       const commandPath = path.join(projectDir, '.claude', 'commands', 'opsx', `${commandId}.md`);
       fs.mkdirSync(path.dirname(commandPath), { recursive: true });
@@ -485,7 +486,7 @@ describe('config profile interactive flow', () => {
     const config = getGlobalConfig();
     expect(config.profile).toBe('core');
     expect(config.delivery).toBe('skills');
-    expect(config.workflows).toEqual(['propose', 'explore', 'apply', 'update', 'sync', 'archive']);
+    expect(config.workflows).toEqual(['roadmap', 'propose', 'explore', 'apply', 'update', 'sync', 'archive']);
     expect(select).not.toHaveBeenCalled();
     expect(checkbox).not.toHaveBeenCalled();
     expect(confirm).not.toHaveBeenCalled();

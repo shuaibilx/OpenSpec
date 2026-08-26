@@ -4,6 +4,23 @@
 
 - **Node.js 20.19.0 or higher** — Check your version: `node --version`
 
+## Install the Roadmap Edition
+
+This fork is installed directly from GitHub so the generated workflow set includes `openspec-roadmap`:
+
+```bash
+npm install -g github:shuaibilx/OpenSpec
+```
+
+The repository has a package-manager-neutral `prepare` build, so a Git installation compiles the CLI automatically. After installation, run `openspec init` in a project. For an existing project, explicitly opt into this fork's expanded core profile and refresh generated files:
+
+```bash
+openspec config profile core
+openspec update
+```
+
+This does not change project specs or active changes. The explicit profile command matters when an older OpenSpec installation was previously inferred as a custom profile; OpenSpec preserves custom workflow selections instead of silently adding new workflows.
+
 ## Install with your AI assistant
 
 Rather not do this by hand? Paste the prompt below into any coding assistant that can run shell commands — Claude Code, Codex, Cursor, Gemini CLI, Copilot, and the rest of the [supported tools](supported-tools.md). It installs the CLI, initializes this project, and reports back what actually happened.
@@ -19,10 +36,10 @@ order, and stop where a step tells you to stop.
    versions, or reconfigure my version manager for me.
 
 2. INSTALL. Use whichever package manager is already on my PATH, preferring npm:
-     npm install -g @fission-ai/openspec@latest
-     pnpm add -g @fission-ai/openspec@latest
-     bun add -g @fission-ai/openspec@latest
-     yarn global add @fission-ai/openspec@latest   (Yarn 1.x only)
+     npm install -g github:shuaibilx/OpenSpec
+     pnpm add -g github:shuaibilx/OpenSpec
+     bun add -g github:shuaibilx/OpenSpec
+     yarn global add github:shuaibilx/OpenSpec   (Yarn 1.x only)
    Don't pick based on this project's lockfile — a global install has nothing to
    do with how this repo's own dependencies are installed. If none of those four
    is available, stop and tell me — don't improvise an install. (If I'm on Nix,
@@ -81,24 +98,26 @@ Nothing in the prompt is vendor-specific: it's plain instructions plus the same 
 ### npm
 
 ```bash
-npm install -g @fission-ai/openspec@latest
+npm install -g github:shuaibilx/OpenSpec
 ```
 
 ### pnpm
 
 ```bash
-pnpm add -g @fission-ai/openspec@latest
+pnpm add -g github:shuaibilx/OpenSpec
 ```
 
 ### yarn
 
 ```bash
-yarn global add @fission-ai/openspec@latest
+yarn global add github:shuaibilx/OpenSpec
 ```
 
 Yarn 2 and later (Berry) removed the `global` command. On those versions, install OpenSpec with npm, pnpm, or bun instead — a global CLI doesn't need to share your project's package manager.
 
 ### deno
+
+Deno's `npm:` installer can only consume published npm packages. The commands below install the upstream OpenSpec release and do **not** include this fork's Roadmap workflow. Use the Node.js GitHub installation above when you need `openspec-roadmap`.
 
 Deno sometimes has issues parsing the @latest tag, but we can specify a version while installing initially.
 If that happens, you could try to change the @latest tag with the version, something like `@^1.3.1`
@@ -121,7 +140,7 @@ Bun can install OpenSpec globally, but OpenSpec currently runs on Node.js.
 You still need Node.js 20.19.0 or higher available on `PATH`.
 
 ```bash
-bun add -g @fission-ai/openspec@latest
+bun add -g github:shuaibilx/OpenSpec
 ```
 
 ## Nix
@@ -129,13 +148,13 @@ bun add -g @fission-ai/openspec@latest
 Run OpenSpec directly without installation:
 
 ```bash
-nix run github:Fission-AI/OpenSpec -- init
+nix run github:shuaibilx/OpenSpec -- init
 ```
 
 Or install to your profile:
 
 ```bash
-nix profile install github:Fission-AI/OpenSpec
+nix profile install github:shuaibilx/OpenSpec
 ```
 
 Or add to your development environment in `flake.nix`:
@@ -144,7 +163,7 @@ Or add to your development environment in `flake.nix`:
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    openspec.url = "github:Fission-AI/OpenSpec";
+    openspec.url = "github:shuaibilx/OpenSpec";
   };
 
   outputs = { nixpkgs, openspec, ... }: {
@@ -161,12 +180,25 @@ Or add to your development environment in `flake.nix`:
 openspec --version
 ```
 
+To verify the Roadmap workflow itself, initialize or update a project and check for the generated Skill:
+
+```bash
+openspec init
+# Codex/shared target: .agents/skills/openspec-roadmap/SKILL.md
+```
+
+For a skills.sh-compatible agent, install the generated Skills directly:
+
+```bash
+npx skills add shuaibilx/OpenSpec
+```
+
 ## Updating
 
 Upgrade the package, then refresh each project's generated files:
 
 ```bash
-npm install -g @fission-ai/openspec@latest   # or pnpm/yarn/bun equivalent
+npm install -g github:shuaibilx/OpenSpec   # or pnpm/yarn/bun equivalent
 openspec update                              # run inside each project
 ```
 

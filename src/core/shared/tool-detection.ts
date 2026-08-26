@@ -36,20 +36,7 @@ export type SkillName = (typeof SKILL_NAMES)[number];
 /**
  * IDs of command templates created by openspec init.
  */
-export const COMMAND_IDS = [
-  'explore',
-  'new',
-  'continue',
-  'apply',
-  'update',
-  'ff',
-  'sync',
-  'archive',
-  'bulk-archive',
-  'verify',
-  'onboard',
-  'propose',
-] as const;
+export const COMMAND_IDS = ALL_WORKFLOWS;
 
 export type CommandId = (typeof COMMAND_IDS)[number];
 
@@ -322,18 +309,28 @@ export function getToolVersionStatus(
   ];
   let generatedByVersion: string | null = null;
   let foundSkill = false;
+  let unreadableSkillVersion = false;
+  const installedSkillVersions = new Set<string>();
 
-  // 1. Find the first skill file that exists and read its version
+  // 1. Read every installed OpenSpec skill. A valid first file must not hide a
+  //    later truncated file or a partially updated set with mixed versions.
   for (const skillName of SKILL_NAMES) {
     for (const skillsDir of skillsDirs) {
       const skillFile = path.join(skillsDir, skillName, 'SKILL.md');
       if (fs.existsSync(skillFile)) {
-        generatedByVersion = extractGeneratedByVersion(skillFile);
         foundSkill = true;
-        break;
+        const version = extractGeneratedByVersion(skillFile);
+        if (version === null) {
+          unreadableSkillVersion = true;
+        } else {
+          installedSkillVersions.add(version);
+        }
       }
     }
-    if (foundSkill) break;
+  }
+
+  if (foundSkill && !unreadableSkillVersion && installedSkillVersions.size === 1) {
+    generatedByVersion = [...installedSkillVersions][0] ?? null;
   }
 
   const skillConfigured = getToolSkillStatus(projectRoot, toolId).configured;

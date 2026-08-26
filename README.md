@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Fission-AI/OpenSpec">
+  <a href="https://github.com/shuaibilx/OpenSpec">
     <picture>
       <source srcset="assets/openspec_bg.png">
       <img src="assets/openspec_bg.png" alt="OpenSpec logo">
@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Fission-AI/OpenSpec/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Fission-AI/OpenSpec/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://github.com/shuaibilx/OpenSpec/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/shuaibilx/OpenSpec/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="https://www.npmjs.com/package/@fission-ai/openspec"><img alt="npm version" src="https://img.shields.io/npm/v/@fission-ai/openspec?style=flat-square" /></a>
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" /></a>
   <a href="https://discord.gg/YctCnvvshC"><img alt="Discord" src="https://img.shields.io/discord/1411657095639601154?style=flat-square&logo=discord&logoColor=white&label=Discord&suffix=%20online" /></a>
@@ -23,6 +23,13 @@
 
 </details>
 <p></p>
+
+> [!IMPORTANT]
+> **Roadmap Edition.** This fork preserves OpenSpec's native workflows and adds
+> `openspec-roadmap` / `/opsx:roadmap` for planning broad initiatives as a
+> sequence of independently deliverable changes. It is based on
+> [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) and remains MIT licensed.
+
 Our philosophy:
 
 ```text
@@ -124,10 +131,10 @@ Solo, OpenSpec keeps you and your AI honest on a single repo. On a team, the har
 
 **Requires Node.js 20.19.0 or higher.**
 
-Install OpenSpec globally:
+Install this Roadmap-enabled OpenSpec build directly from GitHub:
 
 ```bash
-npm install -g @fission-ai/openspec@latest
+npm install -g github:shuaibilx/OpenSpec
 ```
 
 Then navigate to your project directory and initialize:
@@ -141,10 +148,14 @@ openspec init
 
 Now talk to your AI:
 
+- **Planning a broad initiative?** Start with `/opsx:roadmap`. It inspects the
+  current code and OpenSpec state, proposes independently deliverable changes,
+  and writes `openspec/roadmap.md` only after you confirm the decomposition.
+  ([Roadmap guide](docs/roadmap.md))
 - **Not sure what to build yet?** Start with `/opsx:explore`, a no-stakes thinking partner that reads your code, weighs options, and shapes a plan before anything is written. ([Explore guide](docs/explore.md))
 - **Already know what you want?** Go straight to `/opsx:propose <what-you-want-to-build>`.
 
-Both are in the default profile. If you want the expanded workflow (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:bulk-archive`, `/opsx:onboard`), select it with `openspec config profile` and apply with `openspec update`.
+Roadmap, Explore, and Propose are in the default profile. If you want the expanded workflow (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:bulk-archive`, `/opsx:onboard`), select it with `openspec config profile` and apply with `openspec update`.
 
 `/opsx:propose` is the canonical name; your tool may spell it `/opsx-propose` (Cursor, GitHub Copilot), `@opsx-propose` (Amazon Q) or `$openspec-propose` (Codex). `openspec init` prints the right form for the tools you picked — see [How To Invoke](docs/supported-tools.md#how-to-invoke).
 
@@ -158,6 +169,7 @@ Both are in the default profile. If you want the expanded workflow (`/opsx:new`,
 **Start here:** the **[Documentation Home](docs/README.md)** maps everything. New to OpenSpec? Read [Getting Started](docs/getting-started.md), then [How Commands Work](docs/how-commands-work.md) (where you actually type `/opsx:propose`).
 
 → **[Getting Started](docs/getting-started.md)**: first steps<br>
+→ **[Roadmap](docs/roadmap.md)**: split a broad initiative into focused OpenSpec changes<br>
 → **[Explore First](docs/explore.md)**: think it through with `/opsx:explore` before you commit<br>
 → **[How Commands Work](docs/how-commands-work.md)**: where slash commands run vs the CLI<br>
 → **[Core Concepts at a Glance](docs/overview.md)**: the whole mental model, one page<br>
@@ -204,7 +216,7 @@ AI coding assistants are powerful but unpredictable when requirements live only 
 **Upgrade the package**
 
 ```bash
-npm install -g @fission-ai/openspec@latest
+npm install -g github:shuaibilx/OpenSpec
 ```
 
 **Refresh agent instructions**
@@ -212,6 +224,7 @@ npm install -g @fission-ai/openspec@latest
 Run this inside each project to regenerate AI guidance and ensure the latest slash commands are active:
 
 ```bash
+openspec config profile core   # opt into Roadmap if an older install became custom
 openspec update
 ```
 

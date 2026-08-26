@@ -7,7 +7,8 @@ OpenSpec helps you and your AI coding assistant **agree on what to build before 
 If you read nothing else, read these two pages:
 
 1. [Getting Started](getting-started.md): install, initialize, and ship your first change.
-2. [How Commands Work](how-commands-work.md): where you actually type `/opsx:propose` (hint: in your AI chat, not the terminal). This trips up almost everyone once.
+2. [Roadmap](roadmap.md): split a broad initiative into independently deliverable changes.
+3. [How Commands Work](how-commands-work.md): where you actually type `/opsx:propose` (hint: in your AI chat, not the terminal). This trips up almost everyone once.
 
 That second one matters more than it looks. OpenSpec has two halves: a command line tool you run in your terminal, and slash commands you give to your AI assistant. Knowing which is which saves you the most common moment of confusion.
 
@@ -18,6 +19,8 @@ That second one matters more than it looks. OpenSpec has two halves: a command l
 **I'm brand new.** Start with [Getting Started](getting-started.md), then skim the [Core Concepts at a Glance](overview.md). When something feels mysterious, the [FAQ](faq.md) and [Glossary](glossary.md) are nearby.
 
 **I have a problem but not a plan.** This is the common case, and it has a dedicated answer: [Explore First](explore.md). Use `/opsx:explore` to think it through with the AI before committing to anything.
+
+**I have a broad initiative with several outcomes.** Start with [Roadmap](roadmap.md). It decomposes the initiative into focused OpenSpec changes before you Explore each one.
 
 **I have a big existing codebase.** You don't document all of it. [Using OpenSpec in an Existing Project](existing-projects.md) shows how to start on real, brownfield code without boiling the ocean.
 
@@ -42,6 +45,7 @@ That second one matters more than it looks. OpenSpec has two halves: a command l
 | Doc | What it gives you |
 |-----|-------------------|
 | [Getting Started](getting-started.md) | Install, initialize, and run your first change end to end |
+| [Roadmap](roadmap.md) | Decompose and track broad initiatives across multiple OpenSpec changes |
 | [Explore First](explore.md) | Use `/opsx:explore` to think through an idea before you commit |
 | [How Commands Work](how-commands-work.md) | Where slash commands run, what "interactive mode" means, terminal vs chat |
 | [Core Concepts at a Glance](overview.md) | The whole mental model on one page: specs, changes, deltas, archive |
@@ -95,20 +99,22 @@ That second one matters more than it looks. OpenSpec has two halves: a command l
 ## The thirty-second version
 
 ```text
-1. Install        npm install -g @fission-ai/openspec@latest
+1. Install        npm install -g github:shuaibilx/OpenSpec
 2. Initialize     cd your-project && openspec init
-3. Explore        (in your AI chat)  /opsx:explore           ← optional, but a great habit
-4. Propose        (in your AI chat)  /opsx:propose add-dark-mode
-5. Build          (in your AI chat)  /opsx:apply
-6. Archive        (in your AI chat)  /opsx:archive
+3. Roadmap        (in your AI chat)  /opsx:roadmap           ← for broad initiatives
+4. Explore        (in your AI chat)  /opsx:explore           ← for one unclear change
+5. Propose        (in your AI chat)  /opsx:propose add-dark-mode
+6. Build          (in your AI chat)  /opsx:apply
+7. Archive        (in your AI chat)  /opsx:archive
 ```
 
-Steps 1 and 2 happen in your terminal. The rest happen in your AI assistant's chat. That split is the one thing worth memorizing, and [How Commands Work](how-commands-work.md) explains exactly why. Step 3 is optional, but starting with `/opsx:explore` when you're unsure is the habit most worth forming.
+Steps 1 and 2 happen in your terminal. The rest happen in your AI assistant's chat. That split is the one thing worth memorizing, and [How Commands Work](how-commands-work.md) explains exactly why. Roadmap is for multi-change initiatives; Explore remains the first step for one unclear change.
 
 ## Where else to get help
 
 - **Discord:** [discord.gg/YctCnvvshC](https://discord.gg/YctCnvvshC) for questions, ideas, and help.
-- **GitHub Issues:** [github.com/Fission-AI/OpenSpec/issues](https://github.com/Fission-AI/OpenSpec/issues) for bugs and feature requests.
+- **Roadmap fork issues:** [github.com/shuaibilx/OpenSpec/issues](https://github.com/shuaibilx/OpenSpec/issues)
+- **Upstream OpenSpec issues:** [github.com/Fission-AI/OpenSpec/issues](https://github.com/Fission-AI/OpenSpec/issues)
 - **`openspec feedback "your message"`** sends feedback straight from your terminal (it opens a GitHub issue).
 
 Found something in these docs that's wrong, stale, or confusing? That's a bug. Open an issue or a PR. Documentation improvements are some of the most valuable contributions you can make.

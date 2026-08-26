@@ -22,4 +22,8 @@ describe('published package install scripts', () => {
       expect(packageJson.scripts?.[lifecycle]).toBeUndefined();
     }
   );
+
+  it('builds Git dependencies without requiring pnpm on PATH', () => {
+    expect(packageJson.scripts?.prepare).toBe('node build.js');
+  });
 });

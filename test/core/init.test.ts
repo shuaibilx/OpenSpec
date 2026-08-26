@@ -220,8 +220,9 @@ describe('InitCommand', () => {
 
       await initCommand.execute(testDir);
 
-      // Core profile: propose, explore, apply, update, sync, archive
+      // Core profile: roadmap, propose, explore, apply, update, sync, archive
       const coreSkillNames = [
+        'openspec-roadmap',
         'openspec-propose',
         'openspec-explore',
         'openspec-apply-change',
@@ -288,8 +289,9 @@ describe('InitCommand', () => {
 
       await initCommand.execute(testDir);
 
-      // Core profile: propose, explore, apply, update, sync, archive
+      // Core profile: roadmap, propose, explore, apply, update, sync, archive
       const coreCommandNames = [
+        'opsx/roadmap.md',
         'opsx/propose.md',
         'opsx/explore.md',
         'opsx/apply.md',
@@ -418,6 +420,7 @@ describe('InitCommand', () => {
 
       const generatedFiles = [
         ...[
+          'openspec-roadmap',
           'openspec-propose',
           'openspec-explore',
           'openspec-apply-change',
@@ -425,7 +428,7 @@ describe('InitCommand', () => {
           'openspec-sync-specs',
           'openspec-archive-change',
         ].map((name) => path.join(testDir, '.claude', 'skills', name, 'SKILL.md')),
-        ...['propose', 'explore', 'apply', 'update', 'sync', 'archive'].map((name) =>
+        ...['roadmap', 'propose', 'explore', 'apply', 'update', 'sync', 'archive'].map((name) =>
           path.join(testDir, '.claude', 'commands', 'opsx', `${name}.md`)
         ),
       ];
