@@ -14,7 +14,10 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 describe('published package install scripts', () => {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf-8')
-  ) as { scripts?: Record<string, string> };
+  ) as {
+    scripts?: Record<string, string>;
+    dependencies?: Record<string, string>;
+  };
 
   it.each(['preinstall', 'install', 'postinstall'])(
     'declares no "%s" script',
@@ -25,5 +28,10 @@ describe('published package install scripts', () => {
 
   it('builds Git dependencies without requiring pnpm on PATH', () => {
     expect(packageJson.scripts?.prepare).toBe('node build.js');
+  });
+
+  it('ships the compiler dependencies required by Git prepare builds', () => {
+    expect(packageJson.dependencies?.typescript).toBeDefined();
+    expect(packageJson.dependencies?.['@types/node']).toBeDefined();
   });
 });
