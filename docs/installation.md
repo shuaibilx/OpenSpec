@@ -6,13 +6,13 @@
 
 ## Install the Roadmap Edition
 
-This fork is installed directly from GitHub so the generated workflow set includes `openspec-roadmap`:
+Install this fork from its GitHub Release package so the generated workflow set includes `openspec-roadmap`:
 
 ```bash
-npm install -g github:shuaibilx/OpenSpec
+npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
-The repository includes a verified CLI build and a package-manager-neutral `prepare` check, so Git installation does not depend on pnpm or a compiler being available in npm's temporary clone. After installation, run `openspec init` in a project. For an existing project, explicitly opt into this fork's expanded core profile and refresh generated files:
+The release tarball includes a verified CLI build, so installation does not require pnpm or a compiler. After installation, run `openspec init` in a project. For an existing project, explicitly opt into this fork's expanded core profile and refresh generated files:
 
 ```bash
 openspec config profile core
@@ -36,10 +36,10 @@ order, and stop where a step tells you to stop.
    versions, or reconfigure my version manager for me.
 
 2. INSTALL. Use whichever package manager is already on my PATH, preferring npm:
-     npm install -g github:shuaibilx/OpenSpec
-     pnpm add -g github:shuaibilx/OpenSpec
-     bun add -g github:shuaibilx/OpenSpec
-     yarn global add github:shuaibilx/OpenSpec   (Yarn 1.x only)
+     npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
+     pnpm add -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
+     bun add -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
+     yarn global add https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz   (Yarn 1.x only)
    Don't pick based on this project's lockfile — a global install has nothing to
    do with how this repo's own dependencies are installed. If none of those four
    is available, stop and tell me — don't improvise an install. (If I'm on Nix,
@@ -98,26 +98,26 @@ Nothing in the prompt is vendor-specific: it's plain instructions plus the same 
 ### npm
 
 ```bash
-npm install -g github:shuaibilx/OpenSpec
+npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 ### pnpm
 
 ```bash
-pnpm add -g github:shuaibilx/OpenSpec
+pnpm add -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 ### yarn
 
 ```bash
-yarn global add github:shuaibilx/OpenSpec
+yarn global add https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 Yarn 2 and later (Berry) removed the `global` command. On those versions, install OpenSpec with npm, pnpm, or bun instead — a global CLI doesn't need to share your project's package manager.
 
 ### deno
 
-Deno's `npm:` installer can only consume published npm packages. The commands below install the upstream OpenSpec release and do **not** include this fork's Roadmap workflow. Use the Node.js GitHub installation above when you need `openspec-roadmap`.
+Deno's `npm:` installer can only consume published npm packages. The commands below install the upstream OpenSpec release and do **not** include this fork's Roadmap workflow. Use the Node.js GitHub Release installation above when you need `openspec-roadmap`.
 
 Deno sometimes has issues parsing the @latest tag, but we can specify a version while installing initially.
 If that happens, you could try to change the @latest tag with the version, something like `@^1.3.1`
@@ -140,7 +140,7 @@ Bun can install OpenSpec globally, but OpenSpec currently runs on Node.js.
 You still need Node.js 20.19.0 or higher available on `PATH`.
 
 ```bash
-bun add -g github:shuaibilx/OpenSpec
+bun add -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 ## Nix
@@ -198,7 +198,7 @@ npx skills add shuaibilx/OpenSpec
 Upgrade the package, then refresh each project's generated files:
 
 ```bash
-npm install -g github:shuaibilx/OpenSpec   # or pnpm/yarn/bun equivalent
+npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz   # or pnpm/yarn/bun equivalent
 openspec update                              # run inside each project
 ```
 

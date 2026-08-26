@@ -131,10 +131,10 @@ Solo, OpenSpec keeps you and your AI honest on a single repo. On a team, the har
 
 **Requires Node.js 20.19.0 or higher.**
 
-Install this Roadmap-enabled OpenSpec build directly from GitHub:
+Install this Roadmap-enabled OpenSpec build from its GitHub Release package:
 
 ```bash
-npm install -g github:shuaibilx/OpenSpec
+npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 Then navigate to your project directory and initialize:
@@ -216,7 +216,7 @@ AI coding assistants are powerful but unpredictable when requirements live only 
 **Upgrade the package**
 
 ```bash
-npm install -g github:shuaibilx/OpenSpec
+npm install -g https://github.com/shuaibilx/OpenSpec/releases/download/roadmap-v1.10.0-1/fission-ai-openspec-1.10.0.tgz
 ```
 
 **Refresh agent instructions**
