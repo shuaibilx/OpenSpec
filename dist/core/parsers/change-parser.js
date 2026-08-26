@@ -1,0 +1,211 @@
+import { MarkdownParser } from './markdown-parser.js';
+import { buildCodeFenceMask } from './requirement-text.js';
+import path from 'path';
+import { promises as fs } from 'fs';
+import { discoverSpecFiles } from '../../utils/spec-discovery.js';
+export class ChangeParser extends MarkdownParser {
+    changeDir;
+    constructor(content, changeDir) {
+        super(content);
+        this.changeDir = changeDir;
+    }
+    async parseChangeWithDeltas(name) {
+        const sections = this.parseSections();
+        const why = this.findSection(sections, 'Why')?.content || '';
+        const whatChanges = this.findSection(sections, 'What Changes')?.content || '';
+        if (!why) {
+            throw new Error('Change must have a Why section');
+        }
+        if (!whatChanges) {
+            throw new Error('Change must have a What Changes section');
+        }
+        // Parse deltas from the What Changes section (simple format)
+        const simpleDeltas = this.parseDeltas(whatChanges);
+        // Check if there are spec files with delta format
+        const specsDir = path.join(this.changeDir, 'specs');
+        const deltaDeltas = await this.parseDeltaSpecs(specsDir);
+        // Combine both types of deltas, preferring delta format if available
+        const deltas = deltaDeltas.length > 0 ? deltaDeltas : simpleDeltas;
+        return {
+            name,
+            why: why.trim(),
+            whatChanges: whatChanges.trim(),
+            deltas,
+            metadata: {
+                version: '1.0.0',
+                format: 'openspec-change',
+            },
+        };
+    }
+    async parseDeltaSpecs(specsDir) {
+        const deltas = [];
+        // Discover delta specs recursively so nested layouts like
+        // specs/<area>/<capability>/spec.md are parsed too (#1353)
+        const specFiles = await discoverSpecFiles(specsDir);
+        for (const { id, specFile } of specFiles) {
+            try {
+                const content = await fs.readFile(specFile, 'utf-8');
+                const specDeltas = this.parseSpecDeltas(id, content);
+                deltas.push(...specDeltas);
+            }
+            catch (error) {
+                // Spec file might not be readable, which is okay
+                continue;
+            }
+        }
+        return deltas;
+    }
+    /**
+     * Read requirements from a delta section, ignoring headers that are not
+     * `### Requirement: <name>`.
+     *
+     * A delta section often carries divider headers such as
+     * `### Documentation Requirements`. The base parser treats every child header
+     * as a requirement, which invented a scenario-less requirement that does not
+     * exist (#498): archive warned about a missing scenario, and `show --json`
+     * reported an extra delta. The delta reader already skips these headers and
+     * notes them, so this keeps the two readers in agreement.
+     *
+     * Overriding here rather than in MarkdownParser keeps main spec parsing —
+     * `view`, `list`, `spec --json`, spec validation — untouched.
+     */
+    parseRequirements(section) {
+        return super.parseRequirements({
+            ...section,
+            children: section.children.filter((child) => /^Requirement:\s*\S/i.test(child.title.trim())),
+        });
+    }
+    parseSpecDeltas(specName, content) {
+        const deltas = [];
+        const sections = this.parseSectionsFromContent(content);
+        // Parse ADDED requirements
+        const addedSection = this.findSection(sections, 'ADDED Requirements');
+        if (addedSection) {
+            const requirements = this.parseRequirements(addedSection);
+            requirements.forEach(req => {
+                deltas.push({
+                    spec: specName,
+                    operation: 'ADDED',
+                    description: `Add requirement: ${req.text}`,
+                    // Provide both single and plural forms for compatibility
+                    requirement: req,
+                    requirements: [req],
+                });
+            });
+        }
+        // Parse MODIFIED requirements
+        const modifiedSection = this.findSection(sections, 'MODIFIED Requirements');
+        if (modifiedSection) {
+            const requirements = this.parseRequirements(modifiedSection);
+            requirements.forEach(req => {
+                deltas.push({
+                    spec: specName,
+                    operation: 'MODIFIED',
+                    description: `Modify requirement: ${req.text}`,
+                    requirement: req,
+                    requirements: [req],
+                });
+            });
+        }
+        // Parse REMOVED requirements
+        const removedSection = this.findSection(sections, 'REMOVED Requirements');
+        if (removedSection) {
+            const requirements = this.parseRequirements(removedSection);
+            requirements.forEach(req => {
+                deltas.push({
+                    spec: specName,
+                    operation: 'REMOVED',
+                    description: `Remove requirement: ${req.text}`,
+                    requirement: req,
+                    requirements: [req],
+                });
+            });
+        }
+        // Parse RENAMED requirements
+        const renamedSection = this.findSection(sections, 'RENAMED Requirements');
+        if (renamedSection) {
+            const renames = this.parseRenames(renamedSection.content);
+            renames.forEach(rename => {
+                deltas.push({
+                    spec: specName,
+                    operation: 'RENAMED',
+                    description: `Rename requirement from "${rename.from}" to "${rename.to}"`,
+                    rename,
+                });
+            });
+        }
+        return deltas;
+    }
+    parseRenames(content) {
+        const renames = [];
+        const lines = ChangeParser.normalizeContent(content).split('\n');
+        let currentRename = {};
+        for (const line of lines) {
+            const fromMatch = line.match(/^\s*-?\s*FROM:\s*`?###\s*Requirement:\s*(.+?)`?\s*$/);
+            const toMatch = line.match(/^\s*-?\s*TO:\s*`?###\s*Requirement:\s*(.+?)`?\s*$/);
+            if (fromMatch) {
+                currentRename.from = fromMatch[1].trim();
+            }
+            else if (toMatch) {
+                currentRename.to = toMatch[1].trim();
+                if (currentRename.from && currentRename.to) {
+                    renames.push({
+                        from: currentRename.from,
+                        to: currentRename.to,
+                    });
+                    currentRename = {};
+                }
+            }
+        }
+        return renames;
+    }
+    parseSectionsFromContent(content) {
+        const normalizedContent = ChangeParser.normalizeContent(content);
+        const lines = normalizedContent.split('\n');
+        const codeFenceLineMask = buildCodeFenceMask(lines);
+        const sections = [];
+        const stack = [];
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (codeFenceLineMask[i]) {
+                continue;
+            }
+            const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
+            if (headerMatch) {
+                const level = headerMatch[1].length;
+                const title = headerMatch[2].trim();
+                const contentLines = this.getContentUntilNextHeaderFromLines(lines, codeFenceLineMask, i + 1, level);
+                const section = {
+                    level,
+                    title,
+                    content: contentLines.join('\n').trim(),
+                    children: [],
+                };
+                while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+                    stack.pop();
+                }
+                if (stack.length === 0) {
+                    sections.push(section);
+                }
+                else {
+                    stack[stack.length - 1].children.push(section);
+                }
+                stack.push(section);
+            }
+        }
+        return sections;
+    }
+    getContentUntilNextHeaderFromLines(lines, codeFenceLineMask, startLine, currentLevel) {
+        const contentLines = [];
+        for (let i = startLine; i < lines.length; i++) {
+            const line = lines[i];
+            const headerMatch = codeFenceLineMask[i] ? null : line.match(/^(#{1,6})\s+/);
+            if (headerMatch && headerMatch[1].length <= currentLevel) {
+                break;
+            }
+            contentLines.push(line);
+        }
+        return contentLines;
+    }
+}
+//# sourceMappingURL=change-parser.js.map

@@ -12,7 +12,7 @@ This fork is installed directly from GitHub so the generated workflow set includ
 npm install -g github:shuaibilx/OpenSpec
 ```
 
-The repository has a package-manager-neutral `prepare` build, so a Git installation compiles the CLI automatically. After installation, run `openspec init` in a project. For an existing project, explicitly opt into this fork's expanded core profile and refresh generated files:
+The repository includes a verified CLI build and a package-manager-neutral `prepare` check, so Git installation does not depend on pnpm or a compiler being available in npm's temporary clone. After installation, run `openspec init` in a project. For an existing project, explicitly opt into this fork's expanded core profile and refresh generated files:
 
 ```bash
 openspec config profile core

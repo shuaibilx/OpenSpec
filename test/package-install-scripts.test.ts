@@ -27,19 +27,19 @@ describe('published package install scripts', () => {
     }
   );
 
-  it('builds Git dependencies through a package-manager-neutral preparer', () => {
+  it('prepares Git dependencies without requiring pnpm on PATH', () => {
     expect(packageJson.scripts?.prepare).toBe('node scripts/prepare-package.mjs');
   });
 
-  it('bootstraps missing build dependencies without recursively running lifecycle scripts', () => {
+  it('uses a checked-in build for Git source installations', () => {
     const preparePath = path.join(repoRoot, 'scripts', 'prepare-package.mjs');
     expect(fs.existsSync(preparePath)).toBe(true);
     if (!fs.existsSync(preparePath)) return;
 
     const prepareScript = fs.readFileSync(preparePath, 'utf-8');
-    expect(prepareScript).toContain('--ignore-scripts');
-    expect(prepareScript).toContain('--global=false');
-    expect(prepareScript).toContain('--include=dev');
+    expect(prepareScript).toContain('dist/cli/index.js');
+    expect(prepareScript).not.toContain('--ignore-scripts');
+    expect(fs.existsSync(path.join(repoRoot, 'dist', 'cli', 'index.js'))).toBe(true);
   });
 
   it('keeps compiler dependencies build-only', () => {

@@ -1922,13 +1922,13 @@ export class ArchiveCommand {
               stagedSource?: string
             ): Promise<void> => {
               if (hasRetirements) {
+                // Archived changes are nested one level deeper than active
+                // changes, so the marker reader cannot resolve their schema.
+                // Exact content equality proves this is the authorization
+                // already validated at the active path.
                 await assertRetirementAuthorization(
                   archivePath,
                   retirementAuthorizationFingerprint!,
-                  // Archived changes are nested one level deeper than active
-                  // changes, so the marker reader cannot resolve their schema.
-                  // Exact content equality proves this is the authorization
-                  // already validated at the active path.
                   { verifyMarker: false }
                 );
                 if (stagedSource) {
