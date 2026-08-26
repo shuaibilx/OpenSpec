@@ -17,6 +17,7 @@ describe('published package install scripts', () => {
   ) as {
     scripts?: Record<string, string>;
     dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
   };
 
   it.each(['preinstall', 'install', 'postinstall'])(
@@ -26,12 +27,25 @@ describe('published package install scripts', () => {
     }
   );
 
-  it('builds Git dependencies without requiring pnpm on PATH', () => {
-    expect(packageJson.scripts?.prepare).toBe('node build.js');
+  it('builds Git dependencies through a package-manager-neutral preparer', () => {
+    expect(packageJson.scripts?.prepare).toBe('node scripts/prepare-package.mjs');
   });
 
-  it('ships the compiler dependencies required by Git prepare builds', () => {
-    expect(packageJson.dependencies?.typescript).toBeDefined();
-    expect(packageJson.dependencies?.['@types/node']).toBeDefined();
+  it('bootstraps missing build dependencies without recursively running lifecycle scripts', () => {
+    const preparePath = path.join(repoRoot, 'scripts', 'prepare-package.mjs');
+    expect(fs.existsSync(preparePath)).toBe(true);
+    if (!fs.existsSync(preparePath)) return;
+
+    const prepareScript = fs.readFileSync(preparePath, 'utf-8');
+    expect(prepareScript).toContain('--ignore-scripts');
+    expect(prepareScript).toContain('--global=false');
+    expect(prepareScript).toContain('--include=dev');
+  });
+
+  it('keeps compiler dependencies build-only', () => {
+    expect(packageJson.devDependencies?.typescript).toBeDefined();
+    expect(packageJson.devDependencies?.['@types/node']).toBeDefined();
+    expect(packageJson.dependencies?.typescript).toBeUndefined();
+    expect(packageJson.dependencies?.['@types/node']).toBeUndefined();
   });
 });

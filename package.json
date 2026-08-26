@@ -49,7 +49,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "prepare": "node build.js",
+    "prepare": "node scripts/prepare-package.mjs",
     "prepublishOnly": "pnpm run build",
     "check:pack-version": "node scripts/pack-version-check.mjs",
     "release": "pnpm run release:ci",
@@ -62,22 +62,22 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.31.1",
+    "@types/node": "^20.19.43",
     "@vitest/ui": "^3.2.6",
     "eslint": "^10.5.0",
     "smol-toml": "^1.7.1",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
     "vitest": "^3.2.6"
   },
   "dependencies": {
     "@inquirer/core": "^11.2.1",
     "@inquirer/prompts": "^8.5.2",
-    "@types/node": "^20.19.43",
     "chalk": "^5.6.2",
     "commander": "^14.0.0",
     "cross-spawn": "7.0.6",
     "fast-glob": "^3.3.3",
     "ora": "^9.4.1",
-    "typescript": "^6.0.3",
     "yaml": "^2.8.3",
     "zod": "^4.4.3"
   },
